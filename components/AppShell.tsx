@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Menu } from "lucide-react";
 import { Sidebar, type View } from "./Sidebar";
 import { DashboardView } from "./DashboardView";
 import { ProductsView } from "./ProductsView";
@@ -20,6 +21,7 @@ export function AppShell() {
   const [loaded, setLoaded] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [view, setView] = useState<View>("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
@@ -49,9 +51,16 @@ export function AppShell() {
 
   return (
     <div className="flex min-h-screen bg-slate-50">
-      <Sidebar active={view} onNavigate={setView} />
+      <Sidebar active={view} onNavigate={setView} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main className="flex-1 overflow-y-auto px-8 py-8">
+      <main className="min-w-0 flex-1 overflow-y-auto px-4 py-4 sm:px-8 sm:py-8">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="mb-4 flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 md:hidden"
+        >
+          <Menu size={16} />
+          Menú
+        </button>
         <div className="mx-auto max-w-6xl">
           {view === "dashboard" ? (
             <>
