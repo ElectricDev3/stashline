@@ -21,7 +21,7 @@ function StatCard({
 }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-sm border bg-white pl-4 pr-4 py-4 ${
+      className={`relative min-w-0 overflow-hidden rounded-sm border bg-white pl-4 pr-3 py-4 ${
         tone === "risk" ? "border-[var(--status-low)]/30" : "border-[var(--paper-line)]"
       }`}
     >
@@ -30,10 +30,12 @@ function StatCard({
         aria-hidden
       />
       <div className="flex items-center gap-2 text-slate-500">
-        <Icon size={15} strokeWidth={2} />
-        <p className="text-[11px] font-semibold uppercase tracking-[0.1em]">{label}</p>
+        <Icon size={15} strokeWidth={2} className="shrink-0" />
+        <p className="truncate text-[11px] font-semibold uppercase tracking-[0.1em]">{label}</p>
       </div>
-      <p className="tabular-nums mt-2 font-mono text-2xl font-semibold text-[var(--ink)]">{value}</p>
+      <p className="tabular-nums mt-2 truncate font-mono text-xl font-semibold text-[var(--ink)] sm:text-2xl">
+        {value}
+      </p>
     </div>
   );
 }
