@@ -1,18 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1f241f;
-  --accent: #b45309;
+  /* Stashline token system — warehouse control-board palette.
+     paper = canvas, ink = primary text, panel = dark control-panel chrome,
+     brand = primary actions/active states, signal-* = urgency-only accents. */
+  --background: #eef0f0;
+  --foreground: #141917;
+  --paper: #eef0f0;
+  --paper-line: #cbd0ce;
+  --ink: #141917;
+
+  --panel: #16232f;
+  --panel-line: #26374a;
+  --panel-fg: #edefea;
+  --panel-fg-muted: #93a3ac;
+
+  --accent: #2e5c8a;
+  --accent-hover: #24486e;
+  --accent-soft: #dbe6ee;
+
+  --status-ok: #3f6b5a;
+  --status-ok-bg: #e2e9e3;
+  --status-low: #b4611a;
+  --status-low-bg: #f5e6d3;
+  --status-out: #a8352a;
+  --status-out-bg: #f3ddda;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-slate-50: #f4f5f1;
-  --color-slate-200: #d9dbd0;
+  --color-slate-50: #eef0f0;
+  --color-slate-100: #e3e6e4;
+  --color-slate-200: #cbd0ce;
+  --color-slate-300: #aeb5b1;
+  --color-slate-400: #838c87;
+  --color-slate-500: #626c67;
+  --color-slate-600: #4b544e;
+  --color-slate-700: #383f3a;
+  --color-slate-800: #262b27;
+  --color-slate-900: #141917;
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
   --radius-md: 0.1875rem;
   --radius-lg: 0.25rem;
 }
@@ -27,4 +57,17 @@ h1, h2, h3 {
   font-family: var(--font-display), Arial, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.01em;
+}
+
+/* Faint count-sheet grid on the main working surface — a quiet nod to
+   physical stock ledgers, never louder than the data sitting on top of it. */
+.ledger-surface {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--paper-line) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--paper-line) 45%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }

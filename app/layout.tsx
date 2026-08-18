@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
+import { Big_Shoulders, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
-const barlowCondensed = Barlow_Condensed({
+const bigShoulders = Big_Shoulders({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["600", "700", "800"],
 });
 
-const inter = Inter({
+const plexSans = IBM_Plex_Sans({
   variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -22,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${barlowCondensed.variable} ${inter.variable} h-full antialiased`}
+      className={`${bigShoulders.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

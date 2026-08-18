@@ -1,15 +1,19 @@
 import type { StockStatus } from "@/lib/types";
 
-const STATUS_CLASSES: Record<StockStatus, string> = {
-  in: "bg-emerald-100 text-emerald-700",
-  low: "bg-amber-100 text-amber-700",
-  out: "bg-red-100 text-red-700",
+// "En stock" stays deliberately quiet — urgency color is reserved for the
+// two states that actually need attention, so low/out read instantly.
+const STATUS_STYLE: Record<StockStatus, { bg: string; fg: string }> = {
+  in: { bg: "var(--paper-line)", fg: "var(--foreground)" },
+  low: { bg: "var(--status-low-bg)", fg: "var(--status-low)" },
+  out: { bg: "var(--status-out-bg)", fg: "var(--status-out)" },
 };
 
 export function StockBadge({ status, label }: { status: StockStatus; label: string }) {
+  const style = STATUS_STYLE[status];
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_CLASSES[status]}`}
+      className="inline-flex items-center rounded-sm px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide"
+      style={{ background: style.bg, color: style.fg }}
     >
       {label}
     </span>

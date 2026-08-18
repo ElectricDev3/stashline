@@ -10,8 +10,8 @@ import type { Product } from "@/lib/types";
 
 function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <div className="mb-6">
-      <h1 className="text-xl font-semibold tracking-tight text-slate-900">{title}</h1>
+    <div className="mb-7 border-b border-[var(--paper-line)] pb-4">
+      <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--ink)]">{title}</h1>
       <p className="text-sm text-slate-500">{subtitle}</p>
     </div>
   );
@@ -46,17 +46,21 @@ export function AppShell() {
   }
 
   if (!loaded) {
-    return <div className="flex min-h-screen items-center justify-center text-sm text-slate-400">Cargando…</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[var(--paper)] font-mono text-sm text-slate-400">
+        Cargando inventario…
+      </div>
+    );
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-[var(--paper)]">
       <Sidebar active={view} onNavigate={setView} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main className="min-w-0 flex-1 overflow-y-auto px-4 py-4 sm:px-8 sm:py-8">
+      <main className="ledger-surface min-w-0 flex-1 overflow-y-auto px-4 py-4 sm:px-8 sm:py-8">
         <button
           onClick={() => setSidebarOpen(true)}
-          className="mb-4 flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 md:hidden"
+          className="mb-4 flex items-center gap-2 rounded-sm border border-[var(--paper-line)] bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm md:hidden"
         >
           <Menu size={16} />
           Menú

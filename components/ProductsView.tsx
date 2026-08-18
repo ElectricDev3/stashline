@@ -11,6 +11,12 @@ import { getStockStatus, uniqueCategories } from "@/lib/inventory";
 import { formatCurrency } from "@/lib/format";
 import { STOCK_STATUS_LABELS, type Product, type StockStatus } from "@/lib/types";
 
+const STRIPE_COLOR: Record<StockStatus, string> = {
+  in: "var(--paper-line)",
+  low: "var(--status-low)",
+  out: "var(--status-out)",
+};
+
 interface ProductsViewProps {
   products: Product[];
   onCreate: (product: Product) => void;
@@ -91,9 +97,9 @@ export function ProductsView({ products, onCreate, onUpdate, onDelete, onAdjustQ
           }
         />
       ) : (
-        <div className="overflow-hidden rounded-lg border border-slate-200">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+        <div className="overflow-x-auto rounded-sm border border-[var(--paper-line)] bg-white">
+          <table className="w-full min-w-[720px] text-sm">
+            <thead className="border-b border-[var(--paper-line)] text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
               <tr>
                 <th className="px-4 py-3">Producto</th>
                 <th className="px-4 py-3">Categoría</th>
@@ -103,14 +109,17 @@ export function ProductsView({ products, onCreate, onUpdate, onDelete, onAdjustQ
                 <th className="px-4 py-3 text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[var(--paper-line)]">
               {filtered.map((product) => {
                 const status = getStockStatus(product);
                 return (
-                  <tr key={product.id} className="hover:bg-slate-50">
-                    <td className="px-4 py-3">
-                      <p className="font-medium text-slate-900">{product.name}</p>
-                      <p className="text-xs text-slate-500">
+                  <tr key={product.id} className="hover:bg-[var(--paper)]">
+                    <td
+                      className="border-l-[3px] px-3.5 py-3"
+                      style={{ borderLeftColor: STRIPE_COLOR[status] }}
+                    >
+                      <p className="font-medium text-[var(--ink)]">{product.name}</p>
+                      <p className="font-mono text-xs text-slate-500">
                         {product.sku} · {product.location || "Sin ubicación"}
                       </p>
                     </td>
@@ -120,15 +129,17 @@ export function ProductsView({ products, onCreate, onUpdate, onDelete, onAdjustQ
                         <button
                           onClick={() => onAdjustQuantity(product.id, -1)}
                           disabled={product.quantity === 0}
-                          className="rounded-md border border-slate-200 p-1 text-slate-500 hover:bg-slate-100 disabled:opacity-30"
+                          className="rounded-sm border border-[var(--paper-line)] p-1 text-slate-500 hover:bg-[var(--paper)] disabled:opacity-30"
                           aria-label="Restar unidad"
                         >
                           <Minus size={13} />
                         </button>
-                        <span className="w-8 text-center font-medium text-slate-800">{product.quantity}</span>
+                        <span className="tabular-nums w-8 text-center font-mono font-medium text-[var(--ink)]">
+                          {product.quantity}
+                        </span>
                         <button
                           onClick={() => onAdjustQuantity(product.id, 1)}
-                          className="rounded-md border border-slate-200 p-1 text-slate-500 hover:bg-slate-100"
+                          className="rounded-sm border border-[var(--paper-line)] p-1 text-slate-500 hover:bg-[var(--paper)]"
                           aria-label="Sumar unidad"
                         >
                           <Plus size={13} />
@@ -138,21 +149,21 @@ export function ProductsView({ products, onCreate, onUpdate, onDelete, onAdjustQ
                     <td className="px-4 py-3">
                       <StockBadge status={status} label={STOCK_STATUS_LABELS[status]} />
                     </td>
-                    <td className="px-4 py-3 text-right font-medium text-slate-900">
+                    <td className="px-4 py-3 text-right font-mono font-medium text-[var(--ink)]">
                       {formatCurrency(product.unitPrice)}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-1">
                         <button
                           onClick={() => setModalProduct(product)}
-                          className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+                          className="rounded-sm p-1.5 text-slate-500 hover:bg-[var(--paper)] hover:text-[var(--ink)]"
                           aria-label="Editar"
                         >
                           <Pencil size={15} />
                         </button>
                         <button
                           onClick={() => handleDelete(product)}
-                          className="rounded-md p-1.5 text-slate-500 hover:bg-red-50 hover:text-red-600"
+                          className="rounded-sm p-1.5 text-slate-500 hover:bg-[var(--status-out-bg)] hover:text-[var(--status-out)]"
                           aria-label="Eliminar"
                         >
                           <Trash2 size={15} />
