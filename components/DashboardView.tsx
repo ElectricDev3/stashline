@@ -31,11 +31,9 @@ function StatCard({
       />
       <div className="flex items-center gap-2 text-slate-500">
         <Icon size={15} strokeWidth={2} className="shrink-0" />
-        <p className="truncate text-[11px] font-semibold uppercase tracking-[0.1em]">{label}</p>
+        <p className="text-[11px] font-semibold uppercase leading-tight tracking-[0.1em]">{label}</p>
       </div>
-      <p className="tabular-nums mt-2 truncate font-mono text-xl font-semibold text-[var(--ink)] sm:text-2xl">
-        {value}
-      </p>
+      <p className="tabular-nums mt-2 truncate font-mono text-lg font-semibold text-[var(--ink)]">{value}</p>
     </div>
   );
 }
